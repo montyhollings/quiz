@@ -37,13 +37,13 @@ class RolesAndPermissionsSeeder extends Seeder
         $role = Role::create(['name' => 'user'])
             ->givePermissionTo(['take quizzes', 'view quiz questions', 'view quizzes']);
         //user
-        $role = Role::create(['name' => 'restricted_user'])
+        $role = Role::create(['name' => 'restricted user'])
             ->givePermissionTo(['view quiz questions', 'view quizzes']);
         $user = User::findorfail(1);
-        $user->assignRole(['administrator', 'user', 'restricted_user']);
+        $user->assignRole(['administrator', 'user', 'restricted user']);
         $user = User::findorfail(2);
         $user->assignRole('user');
         $user = User::findorfail(3);
-        $user->assignRole('restricted_user');
+        $user->assignRole('restricted user');
     }
 }

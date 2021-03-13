@@ -26,3 +26,9 @@ require __DIR__.'/auth.php';
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::prefix('administration')->name('admin.')->group(function () {
+    Route::prefix('/users/')->name('users.')->group(function () {
+        Route::get('/', [\App\Http\Controllers\AdministrationController::class, 'index'])->name('index');
+    });
+});

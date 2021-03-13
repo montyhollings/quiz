@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -50,6 +51,23 @@ class User extends Authenticatable
         {
             return $this->first_name . ' ' . $this->surname;
         }
-
     }
+
+    public function getUserRolesAttribute()
+    {
+        if(in_array('administrator', $this->roles()->pluck('name')->toArray())){
+            return 'Administrator';
+        }else if(in_array('user', $this->roles()->pluck('name')->toArray())){
+            return 'User';
+        }else {
+            return 'Restricted User';
+        }
+    }
+
+    public function getCreatedAtDateDisplayAttribute()
+    {
+        return Carbon::parse($this->created_at)->format('d/m/Y');
+    }
+
+
 }
