@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -14,11 +15,13 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
-            'first_name' => 'Monty',
-            'surname' => 'Hollings',
-            'email' => 'monty@bespokeit.software',
-            'password' => '$2y$10$KcDadQfDIYyiHQdf0AKbMOiBjPEYhWkXv1WiZoAjoeE.hHNskM6c2',
-        ]);
+        DB::insert("insert into users (first_name, surname, email, password) values ('Monty', 'Hollings', 'monty@bespokeit.software', '$2y$10\$KcDadQfDIYyiHQdf0AKbMOiBjPEYhWkXv1WiZoAjoeE.hHNskM6c2')");
+        DB::insert("insert into users (first_name, surname, email, password) values ('John', 'Bishop', 'jbishop@gmail.com', '$2y$10\$KcDadQfDIYyiHQdf0AKbMOiBjPEYhWkXv1WiZoAjoeE.hHNskM6c2')");
+        DB::insert("insert into users (first_name, surname, email, password) values ('Jane', 'Weathers', 'jw@gmail.com', '$2y$10\$KcDadQfDIYyiHQdf0AKbMOiBjPEYhWkXv1WiZoAjoeE.hHNskM6c2')");
+
+
+
+
+
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -38,5 +39,11 @@ class RolesAndPermissionsSeeder extends Seeder
         //user
         $role = Role::create(['name' => 'restricted_user'])
             ->givePermissionTo(['view quiz questions', 'view quizzes']);
+        $user = User::findorfail(1);
+        $user->assignRole(['administrator', 'user', 'restricted_user']);
+        $user = User::findorfail(2);
+        $user->assignRole('user');
+        $user = User::findorfail(3);
+        $user->assignRole('restricted_user');
     }
 }
