@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -54,8 +55,13 @@ class User extends Authenticatable
 
     }
 
+    public function getCreatedAtDateDisplay()
+    {
+        return Carbon::parse($this->created_at)->format('d/m/Y');
+    }
+
     public function Role()
     {
-        return $this->hasOne(Role::class);
+        return $this->hasOne(Role::class, 'id', 'role');
     }
 }
