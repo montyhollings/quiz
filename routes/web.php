@@ -19,12 +19,16 @@ Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('ho
 Route::prefix('administration')->name('admin.')->group(function () {
     Route::prefix('/users/')->name('users.')->group(function () {
          Route::get('/', [\App\Http\Controllers\AdminController::class, 'index'])->name('index');
+         Route::get('/edit/{user}', [App\Http\Controllers\AdminController::class, 'edit'])->name('edit');
+        Route::post('/save/{user}', [App\Http\Controllers\AdminController::class, 'save'])->name('save');
+        Route::get('/new', [App\Http\Controllers\AdminController::class, 'new_user'])->name('new');
+        Route::post('/submit_new_user', [App\Http\Controllers\AdminController::class, 'submit_new_user'])->name('submit_new_user');
+         Route::get('/delete/{user}', [App\Http\Controllers\AdminController::class, 'delete_modal'])->name('delete_modal');
+         Route::post('/delete/{user}/submit', [App\Http\Controllers\AdminController::class, 'submit_delete'])->name('submit_delete');
      });
 });
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth'])->name('dashboard');
+
 
 require __DIR__.'/auth.php';
 

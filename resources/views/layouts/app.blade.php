@@ -10,7 +10,7 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/app.js') }}" ></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -22,11 +22,20 @@
 <body>
     <div id="app">
         @include('layouts.nav')
+        @if(session('alert-class'))
+                <div id="flash" class="alert  {{ session('alert-class') }}">{{ session('message') }}</div>
+           @endif
 
 
         <main class="py-4">
             @yield('content')
         </main>
     </div>
+@yield('custom-javascript')
+    <script>
+        $(document).ready(function(){
+            $("#flash").delay(5000).slideUp(300);
+        });
+    </script>
 </body>
 </html>
