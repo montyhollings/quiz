@@ -19,7 +19,7 @@ class CreateRolesTable extends Migration
             $table->string('description');
         });
         Schema::table('users', function (Blueprint $table) {
-            $table->foreignId('role');
+            $table->foreignId('role')->after('super_admin');
             $table->foreign('role')->references('id')->on('roles');
         });
     }
