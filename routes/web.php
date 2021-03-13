@@ -30,5 +30,8 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::prefix('administration')->name('admin.')->group(function () {
     Route::prefix('/users/')->name('users.')->group(function () {
         Route::get('/', [\App\Http\Controllers\AdministrationController::class, 'index'])->name('index');
+        Route::get('/edit/{user}', [\App\Http\Controllers\AdministrationController::class, 'edit'])->name('edit');
+        Route::post('/save/{user}', [\App\Http\Controllers\AdministrationController::class, 'save'])->name('save');
+        Route::post('/submit_new_user', [\App\Http\Controllers\AdministrationController::class, 'submit_new_user'])->name('submit_new_user');
     });
 });
