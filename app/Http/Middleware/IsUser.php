@@ -17,7 +17,7 @@ class IsUser
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::user()->super_admin ||Auth::user()->role === 2 )
+        if(Auth::user()->super_admin ||in_array(array(1,2),Auth::user()->role) )
         {
             return $next($request);
         }

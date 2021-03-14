@@ -65,7 +65,8 @@ class AdminController extends Controller
     public function delete_modal(Request $request, User $user)
     {
         $formurl = route('admin.users.submit_delete', [$user]);
-        return view('administration.users.includes.delete_modal', compact('user', 'formurl'))->render();
+        $type = "user";
+        return view('includes.delete_modal', compact('user', 'type', 'formurl'))->render();
     }
 
     public function submit_delete(Request $request, User $user)
