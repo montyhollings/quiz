@@ -47,6 +47,7 @@
 
                         </div>
                         <div class="card-footer">
+                            <button class="btn btn-primary float-left  @if($type == "add") d-none @endif" type="button" data-url="">Add Question</button>
                             <button  class="btn btn-success float-right" type="submit"> @if($type == "add")Create @else Save @endif</button>
                         </div>
                     </div>
@@ -55,4 +56,25 @@
         </div>
     </form>
 @endsection
+@if($type == "edit")
+    @section('custom-javascript')
+        <script>
+            $(document).ready(function() {
+                $(document).on('click', '#delete_user', function() {
+                    let url = $(this).data('url');
+                    $.ajax({
+                        type:'GET',
+                        url: url,
+                        data:'_token = <?php echo csrf_token() ?>',
+                        success:function(data){
+                            $('#modal_area').html(data);
+                            $('#delete_modal').modal('show')
+                        },
+
+                    });
+                });
+            });
+        </script>
+    @endsection
+@endif
 
