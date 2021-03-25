@@ -52,9 +52,23 @@
                             <button  class="btn btn-success float-right" type="submit"> @if($type == "add")Create @else Save @endif</button>
                         </div>
                     </div>
+                    <div class="error-area">
+
+                        @if ($errors->any())
+                            <div class="alert alert-danger">
+                                <ul>
+                                    @foreach ($errors->all() as $message)
+                                        <li>{{ $message }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+                    </div>
                 </div>
             </div>
+
     </form>
+
             <div id="modal_area">
 
             </div>

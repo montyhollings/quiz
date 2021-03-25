@@ -41,12 +41,12 @@ Route::prefix('quizzes')->name('quizzes.')->group(function () {
     Route::post('/delete/{quiz}/submit', [QuizController::class, 'submit_delete'])->name('submit_delete');
     Route::prefix('/{quiz}/questions')->name('questions.')->group(function () {
         Route::get('/new', [QuizQuestionController::class, 'new_question'])->name('new');
-        Route::get('/view/{quiz}', [QuizQuestionController::class, 'view'])->name('view');
+        Route::get('/view/{question}', [QuizQuestionController::class, 'view'])->name('view');
         Route::post('/submit_new_question', [QuizQuestionController::class, 'submit_new_question'])->name('submit_new_question');
-        Route::get('/edit/{quiz}', [QuizQuestionController::class, 'edit'])->name('edit');
-        Route::post('/save/{quiz}', [QuizQuestionController::class, 'save'])->name('save');
-        Route::get('/delete/{quiz}', [QuizQuestionController::class, 'delete_modal'])->name('delete_modal');
-        Route::post('/delete/{quiz}/submit', [QuizQuestionController::class, 'submit_delete'])->name('submit_delete');
+        Route::get('/edit/{question}', [QuizQuestionController::class, 'edit'])->name('edit');
+        Route::post('/save/{question}', [QuizQuestionController::class, 'save'])->name('save');
+        Route::get('/delete/{question}', [QuizQuestionController::class, 'delete_modal'])->name('delete_modal');
+        Route::post('/delete/{question}/submit', [QuizQuestionController::class, 'submit_delete'])->name('submit_delete');
     });
 
 });

@@ -16,7 +16,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="question_clue">Clue</label>
-                                <textarea rows="2" type="text" class="form-control" id="question_clue" required></textarea>
+                                <textarea rows="2" type="text" class="form-control" id="question_clue"></textarea>
                             </div>
                         </div>
                         <div class="col-6">
