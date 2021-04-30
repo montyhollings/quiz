@@ -36,7 +36,6 @@ class Quiz extends Model
     protected $casts = [
         'times_taken' => 'integer',
         'times_viewed' => 'integer',
-        'number_of_questions' => 'integer',
 
     ];
 
@@ -48,6 +47,12 @@ class Quiz extends Model
     public function questions()
     {
         return $this->hasMany(QuizQuestion::class, 'quiz_id');
+    }
+
+    public function getNumberOfQuestionsAttribute()
+    {
+        return $this->questions->count();
+
     }
 
 

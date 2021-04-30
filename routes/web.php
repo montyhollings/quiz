@@ -48,6 +48,9 @@ Route::prefix('quizzes')->name('quizzes.')->group(function () {
         Route::get('/delete/{question}', [QuizQuestionController::class, 'delete_modal'])->name('delete_modal');
         Route::post('/delete/{question}/submit', [QuizQuestionController::class, 'submit_delete'])->name('submit_delete');
     });
+    Route::prefix('/{quiz}/take')->name('take.')->group(function () {
+        Route::get('/', [QuizController::class, 'take_quiz'])->name('take_quiz');
+    });
 
 });
 

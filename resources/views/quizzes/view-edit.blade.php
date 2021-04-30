@@ -33,7 +33,7 @@
 
 
                         <button  class="btn btn-success" type="button" id="show_questions">View Questions</button>
-                        <button  class="btn btn-danger" type="submit">Take Quiz</button>
+                        <a href="{{route('quizzes.take.take_quiz', [$quiz])}}" class="btn btn-danger" type="submit">Take Quiz</a>
                         <div class="dropdown">
                             <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Options

@@ -20,7 +20,7 @@ class QuizController extends Controller
 
     public function index()
     {
-        $quizzes = Quiz::with('createdby')->get();
+        $quizzes = Quiz::with('createdby', 'questions')->get();
 
         return view('quizzes.index', compact('quizzes'));
     }
@@ -87,9 +87,17 @@ class QuizController extends Controller
         }
         return response()->json(array(
             'success' => false,
-            'message' => 'Your password was incorrect, please try again.',
+            'message' => '  Your password was incorrect, please try again.',
 
         ), 422);
+    }
+
+    public function take_quiz(Request $request, Quiz $quiz)
+    {
+        $quiz->load('questions.answers', 'createdby');
+        $quiz_counter = 0;
+        $question = $quiz->questions->first();
+        return view('quizzes.take_quiz.take_quiz', compact('quiz', 'quiz_counter', 'question'));
     }
 
 }
