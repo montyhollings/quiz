@@ -12,21 +12,31 @@
                         <div class="col-6">
                             <div class="form-group">
                                 <label for="question_title">Question <span class="required">*</span></label>
-                                <input type="text" class="form-control" id="question_title" required>
+                                <input type="text" class="form-control" name="question_title" id="question_title" required>
                             </div>
                             <div class="form-group">
                                 <label for="question_clue">Clue</label>
-                                <textarea rows="2" type="text" class="form-control" id="question_clue"></textarea>
+                                <textarea rows="2" type="text" class="form-control" name="question_clue" id="question_clue"></textarea>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="form-group">
-                                <label for="number_of_answers">Number of Answers</label>
+                                <label for="number_of_answers">Number of Answers<span class="required">*</span></label>
                                 <select class="form-control" id="number_of_answers" name="number_of_answers" required>
                                     <option value=""></option>
                                     <option value="2">2</option>
                                     <option value="3">3</option>
                                     <option value="4">4</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="correct_answer">Correct Answer<span class="required">*</span></label>
+                                <select class="form-control" id="correct_answer" name="correct_answer" required>
+                                    <option value=""></option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3" class="correct_answer_3 d-none">3</option>
+                                    <option value="4" class="correct_answer_4 d-none">4</option>
                                 </select>
                             </div>
                         </div>

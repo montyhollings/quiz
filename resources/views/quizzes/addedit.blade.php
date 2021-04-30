@@ -102,6 +102,8 @@
                             $('#question-col-1').removeClass('d-none');
                             $('#answer_1').prop('required',true);
                             $('#answer_2').prop('required',true);
+                            $('.correct_answer_3').addClass('d-none');
+                            $('.correct_answer_4').addClass('d-none');
                         break;
                         case "3":
                             $('.question-col-1').removeClass('d-none');
@@ -110,6 +112,8 @@
                             $('#answer_1').prop('required',true);
                             $('#answer_2').prop('required',true);
                             $('#answer_3').prop('required',true);
+                            $('.correct_answer_3').removeClass('d-none');
+                            $('.correct_answer_4').addClass('d-none');
 
                         break;
                         case "4":
@@ -121,6 +125,8 @@
                             $('#answer_2').prop('required',true);
                             $('#answer_3').prop('required',true);
                             $('#answer_4').prop('required',true);
+                            $('.correct_answer_3').removeClass('d-none');
+                            $('.correct_answer_4').removeClass('d-none');
 
                             break;
                     }

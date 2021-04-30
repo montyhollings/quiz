@@ -26,7 +26,7 @@ class CreateQuizQuestionsTable extends Migration
             $table->string('clue');
             $table->integer('number_of_answers');
             $table->foreignId('quiz_id');
-            $table->foreignId('answer_id');
+            $table->foreignId('answer_id')->nullable()->default(null);
             $table->foreignId('created_by');
 
             $table->foreign('quiz_id')->references('id')->on('quizzes');

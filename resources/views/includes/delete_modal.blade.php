@@ -7,7 +7,7 @@
             </div>
             <div class="modal-body text-center">
                 <div class="alert alert-danger">
-                    <p class="mb-0 fs-2">Are you sure you wish to delete @if($type == "user") {{$user->display_name}}? @else {{$quiz->name}}? @endif This action cannot be undone.</p>
+                    <p class="mb-0 fs-2">Are you sure you wish to delete @if($type == "user") {{$user->display_name}}? @elseif($type == "question") the question  "{{$question->question}}"@else {{$quiz->name}}? @endif This action cannot be undone.</p>
                     <label for="password">Please enter your password as confirmation</label>
                     <input type="password" autocomplete="password" class="form-control w-50 mx-auto @error('password') is-invalid @enderror" required name="password" id="password">
                     <span class="" role="alert">

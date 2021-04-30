@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Symfony\Component\Console\Question\Question;
 
 class Quiz extends Model
 {
@@ -43,6 +44,10 @@ class Quiz extends Model
     public function createdby()
     {
         return $this->hasOne(User::class, 'id', 'created_by');
+    }
+    public function questions()
+    {
+        return $this->hasMany(QuizQuestion::class, 'quiz_id');
     }
 
 
