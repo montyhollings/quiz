@@ -50,6 +50,8 @@ Route::prefix('quizzes')->name('quizzes.')->group(function () {
     });
     Route::prefix('/{quiz}/take')->name('take.')->group(function () {
         Route::get('/', [QuizController::class, 'take_quiz'])->name('take_quiz');
+        Route::get('/load_question/', [QuizController::class, 'load_question'])->name('load_question');
+        Route::post('/submit_quiz/', [QuizController::class, 'submit_quiz'])->name('submit_quiz');
     });
 
 });

@@ -17,7 +17,7 @@ class IsRestrictedUser
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::user()->super_admin ||in_array(array(1,2,3),Auth::user()->role))
+        if(Auth::user()->super_admin || in_array(array(1,2,3),Auth::user()->role))
         {
             return $next($request);
         }

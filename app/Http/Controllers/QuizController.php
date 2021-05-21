@@ -4,12 +4,16 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\CreateEditQuizRequest;
 use App\Models\Quiz;
+use App\Models\QuizQuestion;
+use App\Models\QuizQuestionAnswer;
+use App\Models\SubmittedQuiz;
+use App\Models\SubmittedQuizAnswer;
 use App\Models\User;
 use Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
-
+use App\Model\QuizQuestsion;
 class QuizController extends Controller
 {
     public function __construct()
@@ -30,8 +34,6 @@ class QuizController extends Controller
         $quiz->load('questions.answers');
         $questions = $quiz->questions;
         return view('quizzes.view-edit', compact('quiz', 'questions'));
-
-
     }
 
     public function new_quiz(Request $request)
@@ -95,9 +97,58 @@ class QuizController extends Controller
     public function take_quiz(Request $request, Quiz $quiz)
     {
         $quiz->load('questions.answers', 'createdby');
-        $quiz_counter = 0;
-        $question = $quiz->questions->first();
-        return view('quizzes.take_quiz.take_quiz', compact('quiz', 'quiz_counter', 'question'));
+        Session(['quiz_counter' => 0]);
+        $questions_count = $quiz->questions->count();
+
+        return view('quizzes.take_quiz.take_quiz', compact('quiz', 'questions_count'));
     }
 
+    public function load_question(Request $request, Quiz $quiz)
+    {
+       $quiz->load('questions.answers');
+       if((Session::get('quiz_counter')) >= $quiz->questions->count())
+       {
+           $completed = true;
+           return view('quizzes.take_quiz.includes.question', compact('quiz','completed'));
+       }
+       $completed = false;
+       $question = $quiz->questions->offsetGet(Session::get('quiz_counter'));
+       Session(['quiz_counter' => Session::get('quiz_counter') + 1]);
+       return view('quizzes.take_quiz.includes.question', compact('quiz', 'question', 'completed'));
+
+    }
+
+    public function submit_quiz(Request $request, Quiz $quiz)
+    {
+        $request = $request->input();
+        $submitted_quiz = new SubmittedQuiz;
+        $submitted_quiz->quiz_id = $quiz->id;
+        $submitted_quiz->user_id = Auth::user()->id;
+        $submitted_quiz->save();
+
+        foreach($request as $key => $object)
+        {
+            $score = 0;
+            if(is_int($key)){
+                $answer = new SubmittedQuizAnswer;
+                $answer->submitted_quiz_id = $submitted_quiz->id;
+                $answer->question_id = $key;
+                $answer->answer_id = $object;
+
+                $selected_question = QuizQuestion::findorfail($key);
+                if($selected_question->answer_id === $object)
+                {
+                    $answer->is_correct = true;
+                    $score++;
+                }else{
+                    $answer->is_correct = false;
+                }
+                $answer->save();
+            }
+        }
+        $submitted_quiz->score = $score;
+        $submitted_quiz->save();
+        
+
+    }
 }

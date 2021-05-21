@@ -1,26 +1,17 @@
 @extends('layouts.app')
 @section('content')
     <div class="container">
-        <div class="row">
-            <div class="col-6 offset-3">
-                <div class="card">
-                    <div class="card-header">
-                        <span class="float-left">{{$quiz->name}} </span>
-                        <span class="float-right">  Question - [{{$quiz_counter}}/{{$quiz->number_of_questions}}]</span>
-                    </div>
-                    <div class="card-body">
-                        @include('quizzes.take_quiz.includes.question', [$question])
-                    </div>
-                    <div class="card-footer">
-                        <div class="row">
-                            <div class=" d-none text-center no-selection-danger alert alert-danger w-100">Please select an option from the above</div>
-                            <button id="nextbutton" class=" float-right btn btn-primary w-100">Next Question</button>
-                        </div>
+        <form action="{{route('quizzes.take.submit_quiz', [$quiz])}}" method="post" id="take_quiz">
+            <div class="hidden_input_div">
 
-                    </div>
+            </div>
+            @csrf
+            <div class="row">
+                <div class="col-6 offset-3 question_div">
+
                 </div>
             </div>
-        </div>
+        </form>
         <div id="modal_area">
         </div>
     </div>
@@ -28,15 +19,37 @@
 @section('custom-javascript')
     <script>
         $(document).ready(function(){
-            $('#nextbutton').on('click', function(){
+            let question_count = {{$questions_count}};
+            function load_question(initial){
+                let quiz_counter = {{Session::get('quiz_counter')}};
+                let url = "{{route('quizzes.take.load_question', [$quiz])}}";
+                let question_id = $('#question_id').val();
+                let answer = $('input:checked', '#take_quiz').val();
+                let input = `<input name="${question_id}" value="${answer}">`
+                if(!initial)
+                {
+                    $('.hidden_input_div').append(input);
+                }
+                $.ajax({
+                    type:'GET',
+                    url: url,
+                    data:'_token = <?php echo csrf_token() ?>',
+                    success:function(data){
+                        $('.question_div').html(data);
+                    },
+                });
+            }
+            load_question(true);
+            $(document).on('click','#nextbutton', function(){
+                console.log('test');
                 checked = $("input[type=radio]:checked").length;
-                console.log(checked);
 
                 if(!checked) {
                     $('.no-selection-danger').removeClass('d-none');
                 }else{
                     $('.no-selection-danger').addClass('d-none');
                 }
+                load_question(false);
 
 
             });
