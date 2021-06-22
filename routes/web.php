@@ -53,6 +53,9 @@ Route::prefix('quizzes')->name('quizzes.')->group(function () {
         Route::get('/load_question/', [QuizController::class, 'load_question'])->name('load_question');
         Route::post('/submit_quiz/', [QuizController::class, 'submit_quiz'])->name('submit_quiz');
     });
+    Route::prefix('/results/')->name('results.')->group(function () {
+       Route::get('/', [QuizController::class, 'results_index'])->name('index');
+    });
 
 });
 

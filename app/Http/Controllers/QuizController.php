@@ -35,14 +35,11 @@ class QuizController extends Controller
         $questions = $quiz->questions;
         return view('quizzes.view-edit', compact('quiz', 'questions'));
     }
-
     public function new_quiz(Request $request)
     {
         $type = "add";
         $formurl = route('quizzes.submit_new_quiz');
         return view('quizzes.addedit', compact('formurl', 'type'));
-
-
     }
 
     public function submit_new_quiz(CreateEditQuizRequest $request)
@@ -125,22 +122,25 @@ class QuizController extends Controller
         $submitted_quiz->quiz_id = $quiz->id;
         $submitted_quiz->user_id = Auth::user()->id;
         $submitted_quiz->save();
+        $score = 0;
 
         foreach($request as $key => $object)
         {
-            $score = 0;
             if(is_int($key)){
                 $answer = new SubmittedQuizAnswer;
                 $answer->submitted_quiz_id = $submitted_quiz->id;
                 $answer->question_id = $key;
-                $answer->answer_id = $object;
-
+                $answer->answer_id = (int) $object ;
                 $selected_question = QuizQuestion::findorfail($key);
-                if($selected_question->answer_id === $object)
+                dump((int) $object   );
+                dump($selected_question->answer_id);
+                if($selected_question->answer_id === (int) $object)
                 {
+                    dump('CORRECT');
                     $answer->is_correct = true;
                     $score++;
                 }else{
+                    dump('INCORRECT');
                     $answer->is_correct = false;
                 }
                 $answer->save();
@@ -148,7 +148,18 @@ class QuizController extends Controller
         }
         $submitted_quiz->score = $score;
         $submitted_quiz->save();
-        
+        $quiz->increment('times_taken',1);
+    }
+
+    public function results_index(Request $request)
+    {
+        $results = SubmittedQuiz::orderBy('created_at', 'desc')->get();
+        return view('quizzes.includes.results.index', compact('results'));
+    }
+
+    public function execute_procedures(Request $request)
+    {
+
 
     }
 }
