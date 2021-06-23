@@ -5,10 +5,10 @@
             <div class="col-10 offset-1">
                 <div class="card">
                     <div class="card-header">
-                        Quizzes
+                        Results for: {{$quiz->name}}
                     </div>
                     <div class="card-body">
-                        @include('quizzes.includes.results.results_quiz_table', compact('quizzes'))
+                        @include('quizzes.includes.results.quiz.includes.results_table', compact('quiz'))
 
                     </div>
                     <div class="card-footer">

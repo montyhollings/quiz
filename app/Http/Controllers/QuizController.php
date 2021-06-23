@@ -132,15 +132,11 @@ class QuizController extends Controller
                 $answer->question_id = $key;
                 $answer->answer_id = (int) $object ;
                 $selected_question = QuizQuestion::findorfail($key);
-                dump((int) $object   );
-                dump($selected_question->answer_id);
                 if($selected_question->answer_id === (int) $object)
                 {
-                    dump('CORRECT');
                     $answer->is_correct = true;
                     $score++;
                 }else{
-                    dump('INCORRECT');
                     $answer->is_correct = false;
                 }
                 $answer->save();
@@ -149,12 +145,24 @@ class QuizController extends Controller
         $submitted_quiz->score = $score;
         $submitted_quiz->save();
         $quiz->increment('times_taken',1);
+
+        Session::flash('message', 'Quiz Submitted Successfully');
+        Session::flash('alert-class', 'alert-success');
+        return redirect()->route('quizzes.view', [$quiz]);
     }
 
     public function results_index(Request $request)
     {
-        $results = SubmittedQuiz::orderBy('created_at', 'desc')->get();
-        return view('quizzes.includes.results.index', compact('results'));
+        $quizzes = Quiz::wherehas('results')->get();
+        return view('quizzes.includes.results.index', compact('quizzes'));
+    }
+
+    public function results_for_quiz(Request $request, Quiz $quiz)
+    {
+        $quiz->load('results');
+        $quiz->results->sortbyDesc('created_at');
+        return view('quizzes.includes.results.quiz.index', compact('quiz'));
+
     }
 
     public function execute_procedures(Request $request)

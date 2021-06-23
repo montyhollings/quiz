@@ -55,6 +55,9 @@ Route::prefix('quizzes')->name('quizzes.')->group(function () {
     });
     Route::prefix('/results/')->name('results.')->group(function () {
        Route::get('/', [QuizController::class, 'results_index'])->name('index');
+       Route::prefix('/view/{quiz}')->name('quiz.')->group(function () {
+           Route::get('/index', [QuizController::class, 'results_for_quiz'])->name('index');
+       });
     });
 
 });

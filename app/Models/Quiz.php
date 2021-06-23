@@ -55,5 +55,10 @@ class Quiz extends Model
 
     }
 
+    public function results()
+    {
+        return $this->hasMany(SubmittedQuiz::class, 'quiz_id');
+    }
+
 
 }

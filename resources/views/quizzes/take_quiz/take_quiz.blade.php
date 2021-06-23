@@ -19,13 +19,11 @@
 @section('custom-javascript')
     <script>
         $(document).ready(function(){
-            let question_count = {{$questions_count}};
             function load_question(initial){
-                let quiz_counter = {{Session::get('quiz_counter')}};
                 let url = "{{route('quizzes.take.load_question', [$quiz])}}";
                 let question_id = $('#question_id').val();
                 let answer = $('input:checked', '#take_quiz').val();
-                let input = `<input name="${question_id}" value="${answer}">`
+                let input = `<input type="hidden" name="${question_id}" value="${answer}">`
                 if(!initial)
                 {
                     $('.hidden_input_div').append(input);
@@ -41,7 +39,6 @@
             }
             load_question(true);
             $(document).on('click','#nextbutton', function(){
-                console.log('test');
                 checked = $("input[type=radio]:checked").length;
 
                 if(!checked) {
